@@ -159,10 +159,10 @@ h2:has(+ .stats) {
 .modalActions {
   background: white;
   position: relative;
-  top: 30%;
+  top: 31%;
   left: 42%;
-  width: 20.4%;
-  height: 6%;
+  width: 18.25%;
+  height: 4%;
 }
 
 .bigolx {
@@ -170,7 +170,7 @@ h2:has(+ .stats) {
   cursor: pointer;
   position: absolute;
   font-size: 48px;
-  top: -3px;
+  top: -15px;
   left: 90%;
 }
 
@@ -185,6 +185,7 @@ table {
   overflow-y: scroll;
   height: 200px;
   display: block;
+  background: wheat;
 }
 
 table,
