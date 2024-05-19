@@ -228,8 +228,9 @@ th {
   box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
 }
 
-.showMoves:active {
+.showMoves:hover {
   background: rgba(102, 110, 231, 0.75);
+  color: #ffffff;
 }
 
 .icon {
