@@ -154,7 +154,7 @@ h2:has(+ .stats) {
 .movesModal {
   position: absolute;
   top: 35%;
-  left: 42%;
+  left: 41%;
 }
 
 .modalActions {
@@ -172,13 +172,13 @@ h2:has(+ .stats) {
   position: absolute;
   font-size: 48px;
   top: -20px;
-  left: 97%;
+  left: 104%;
 }
 
 .modalWalls {
   background: white;
-  width: 22%;
-  height: 28%;
+  width: 23.5%;
+  height: 38%;
   position: relative;
   top: 26%;
   left: 40%;
@@ -191,11 +191,12 @@ h2:has(+ .stats) {
   background: white;
   text-align: center;
   text-transform: capitalize;
+  padding: 2px 6px;
 }
 
 table {
   overflow-y: scroll;
-  height: 200px;
+  height: 330px;
   display: block;
   background: wheat;
   padding: 0px;
