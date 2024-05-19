@@ -275,6 +275,9 @@
           a++;
           PkmnList();
         }
+        if (e.which == 27) {
+          $(".movesWrapper").addClass("hidden");
+        }
       });
 
       ReactDOM.render(<Pokedex />, list);
