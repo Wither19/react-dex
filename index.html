@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="pkmnList"></div>
+    </div>
+    <div class="movesWrapper">
+      <div class="modalActions">
+        <div class="bigolx">x</div>
+      </div>
+      <div class="movesModal">
+        <table>
+          <thead>
+            <tr>
+              <th>Move</th>
+              <th>Type</th>
+              <th>Category</th>
+              <th>PP</th>
+              <th>Power</th>
+              <th>Accuracy</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="data">
+      <h1></h1>
+      <img class="art reg" />
+      <img class="art shiny hidden" />
+      <div class="types"></div>
+      <h2>Abilities</h2>
+      <div class="abilities"></div>
+      <h2>Stats</h2>
+      <div class="stats">
+        <h3>HP</h3>
+        <div class="bar hp"></div>
+        <h3>Attack</h3>
+        <div class="bar atk"></div>
+        <h3>Defense</h3>
+        <div class="bar def"></div>
+        <h3>Sp. Attack</h3>
+        <div class="bar spAtk"></div>
+        <h3>Sp. Defense</h3>
+        <div class="bar spDef"></div>
+        <h3>Speed</h3>
+        <div class="bar spd"></div>
+        <h3>Total</h3>
+        <div class="bar bst"></div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/babel-standalone@6/babel.js"
+    ></script>
+    <script src="ntldex.js"></script>
+    <script type="text/babel">
+      var cur = {};
+      const root = document.querySelector(".data");
+      const list = document.querySelector(".pkmnList");
+      var a = 1;
+
+      PkmnList();
+
+      class Pokedex extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        render() {
+          return (
+            <div>
+              <ul>
+                {dex.map((item, i) => (
+                  <li
+                    onClick={() => {
+                      a = item.entry_number;
+                      PkmnList();
+                    }}
+                    key={item.id}
+                  >
+                    <img
+                      src={`https://raw.githubusercontent.com/Wither19/pokerogue/main/public/images/pokemon/icons/${item.entry_number}.png`}
+                    />
+                    <span style={{ fontWeight: "bold" }}>
+                      #{item.entry_number}
+                    </span>{" "}
+                    {item.pokemon_species.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      function PkmnList() {
+        fetch(`https:/pokeapi.co/api/v2/pokemon/${a}`)
+          .then((response) => response.json())
+          .then((data) => {
+            cur = data;
+            console.log(cur);
+            pkmnData();
+          })
+          .catch((error) => console.log(error));
+      }
+
+      function pkmnData() {
+        $("h1").text(`#${cur.id} - ${cur.name}`);
+        $(".art.reg").attr(
+          "src",
+          cur.sprites.other["official-artwork"].front_default
+        );
+        $(".art.shiny").attr(
+          "src",
+          cur.sprites.other["official-artwork"].front_shiny
+        );
+
+        $(".hp").text(`${cur.stats[0].base_stat}`);
+
+        $(".hp").css({
+          width: `${cur.stats[0].base_stat}px`,
+        });
+
+        $(".atk").text(`${cur.stats[1].base_stat}`);
+
+        $(".atk").css({
+          width: `${cur.stats[1].base_stat}px`,
+        });
+
+        $(".def").text(`${cur.stats[2].base_stat}`);
+
+        $(".def").css({
+          width: `${cur.stats[2].base_stat}px`,
+        });
+
+        $(".spAtk").text(`${cur.stats[3].base_stat}`);
+
+        $(".spAtk").css({
+          width: `${cur.stats[3].base_stat}px`,
+        });
+
+        $(".spDef").text(`${cur.stats[4].base_stat}`);
+
+        $(".spDef").css({
+          width: `${cur.stats[4].base_stat}px`,
+        });
+
+        $(".spd").text(`${cur.stats[5].base_stat}`);
+
+        $(".spd").css({
+          width: `${cur.stats[5].base_stat}px`,
+        });
+
+        $(".bst").text(
+          cur.stats[0].base_stat +
+            cur.stats[1].base_stat +
+            cur.stats[2].base_stat +
+            cur.stats[3].base_stat +
+            cur.stats[4].base_stat +
+            cur.stats[5].base_stat
+        );
+
+        $(".bst").css({
+          width: `${
+            (cur.stats[0].base_stat +
+              cur.stats[1].base_stat +
+              cur.stats[2].base_stat +
+              cur.stats[3].base_stat +
+              cur.stats[4].base_stat +
+              cur.stats[5].base_stat) /
+            3
+          }px`,
+        });
+
+        $(".abilities").text("");
+
+        $(".types").text("");
+
+        cur.types.map((type) =>
+          $(".types").append(
+            `<div class="icon ${type.type.name}"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${type.type.name}.svg"></div>`
+          )
+        );
+        addAbilities();
+        moveFetch();
+      }
+
+      function addAbilities() {
+        cur.abilities.map((ability) =>
+          $(".abilities").append(
+            `<div>${ability.ability.name.replace("-", " ")}</div>`
+          )
+        );
+      }
+
+      function moveFetch() {
+        $(".movesModal tbody").html("");
+        cur.moves.map((move) =>
+          $(".movesModal tbody").append(`<tr>
+            <td>${move.move.name.replace("-", " ")}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            </tr>`)
+        );
+      }
+
+      $(".art").click(function () {
+        $(".art").toggleClass("hidden");
+      });
+
+      $(".bigolx").click(function () {
+        $(".movesWrapper *").addClass("hidden");
+      });
+
+      $(document).keydown(function (e) {
+        if (e.key === "s" && e.altKey) {
+          $(".art").toggleClass("hidden");
+        }
+        if (e.key === "r" && e.altKey) {
+          a = Math.floor(Math.random() * 1025 + 1);
+          PkmnList();
+        }
+        if (e.which === 37 && e.altKey) {
+          e.preventDefault();
+          a--;
+          PkmnList();
+        }
+        if (e.which === 39 && e.altKey) {
+          e.preventDefault();
+          a++;
+          PkmnList();
+        }
+      });
+
+      ReactDOM.render(<Pokedex />, list);
+    </script>
+  </body>
+</html>

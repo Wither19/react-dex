@@ -1,0 +1,306 @@
+:root {
+  font-family: "open sans", sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+ul {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 33%;
+  list-style-type: none;
+  margin-left: 2px;
+  overflow-y: scroll;
+  height: 910px;
+  background: rgba(14, 31, 68, 0.7);
+}
+
+li {
+  text-transform: capitalize;
+  font-size: 22px;
+  height: 48px;
+  margin: 8px 6px;
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  color: #ffffff;
+  border-radius: 8px;
+  transition: background-color 0.1s;
+}
+
+li:hover {
+  background: rgba(102, 110, 231, 0.75);
+}
+
+li img {
+  transform: scale(1.25) translate(-2px, 2px);
+}
+
+.data {
+  position: absolute;
+  top: 3%;
+  left: 45%;
+  width: 30%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+}
+
+.data h1 {
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 36px;
+  position: relative;
+  left: 18%;
+}
+
+.art {
+  display: inherit;
+  position: relative;
+  left: 37%;
+  width: 350px;
+}
+
+.art.hidden {
+  display: none;
+}
+
+.abilities {
+  position: absolute;
+  top: 15%;
+  left: -18.75%;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+}
+
+h2:has(+ .abilities) {
+  position: absolute;
+  top: 8%;
+  left: -10%;
+}
+
+.abilities div {
+  text-transform: capitalize;
+  text-align: center;
+  margin: 8px 0;
+  font-size: 22px;
+}
+
+ha {
+  font-weight: bold;
+}
+ha.false {
+  display: none !important;
+}
+
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: absolute;
+  left: 37%;
+  width: 350px;
+}
+
+h2:has(+ .stats) {
+  position: absolute;
+  top: 8%;
+  left: 141%;
+}
+
+.stats {
+  position: absolute;
+  top: 15%;
+  left: 120%;
+  width: 300px;
+  padding-bottom: 24px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+}
+
+.stats h3 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.bar {
+  height: 24px;
+  background: rgb(12, 105, 200);
+  margin: 0px 8px 0px 12px;
+  font-size: 18px;
+  text-align: center;
+  color: white;
+}
+
+.movesWrapper {
+  background-color: rgb(0 0 0 / 35%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 4;
+}
+
+.movesWrapper.hidden {
+  display: none;
+}
+
+.movesModal {
+  position: absolute;
+  top: 35%;
+  left: 42%;
+}
+
+.modalActions {
+  background: white;
+  position: relative;
+  top: 30%;
+  left: 42%;
+  width: 20.4%;
+  height: 6%;
+}
+
+.bigolx {
+  color: gray;
+  cursor: pointer;
+  position: absolute;
+  font-size: 48px;
+  top: -3px;
+  left: 90%;
+}
+
+.movesModal :is(td, th) {
+  border-collapse: collapse !important;
+  background: white;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+table {
+  overflow-y: scroll;
+  height: 200px;
+  display: block;
+}
+
+table,
+td,
+th {
+  border: 1px solid black;
+}
+
+.icon {
+  border-radius: 100%;
+  height: 105px;
+  width: 105px;
+  margin: 24px auto;
+  transition: all 200ms ease 0s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.icon:hover {
+  filter: saturate(200%);
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.icon img {
+  height: 60%;
+  width: 60%;
+  margin: 20%;
+}
+
+.bug {
+  background: rgb(146, 188, 44);
+  box-shadow: rgb(146, 188, 44) 0px 0px 20px;
+}
+
+.dark {
+  background: rgb(89, 87, 97);
+  box-shadow: rgb(89, 87, 97) 0px 0px 20px;
+}
+
+.dragon {
+  background: rgb(12, 105, 200);
+  box-shadow: rgb(12, 105, 200) 0px 0px 20px;
+}
+
+.electric {
+  background: rgb(242, 217, 78);
+  box-shadow: rgb(242, 217, 78) 0px 0px 20px;
+}
+
+.fire {
+  background: rgb(251, 165, 76);
+  box-shadow: rgb(251, 165, 76) 0px 0px 20px;
+}
+
+.fairy {
+  background: rgb(238, 144, 230);
+  box-shadow: rgb(238, 144, 230) 0px 0px 20px;
+}
+
+.fighting {
+  background: rgb(211, 66, 95);
+  box-shadow: rgb(211, 66, 95) 0px 0px 20px;
+}
+
+.flying {
+  background: rgb(161, 187, 236);
+  box-shadow: rgb(161, 187, 236) 0px 0px 20px;
+}
+
+.ghost {
+  background: rgb(95, 109, 188);
+  box-shadow: rgb(95, 109, 188) 0px 0px 20px;
+}
+
+.grass {
+  background: rgb(95, 189, 88);
+  box-shadow: rgb(95, 189, 88) 0px 0px 20px;
+}
+
+.ground {
+  background: rgb(218, 124, 77);
+  box-shadow: rgb(218, 124, 77) 0px 0px 20px;
+}
+
+.ice {
+  background: rgb(117, 208, 193);
+  box-shadow: rgb(117, 208, 193) 0px 0px 20px;
+}
+
+.normal {
+  background: rgb(160, 162, 159);
+  box-shadow: rgb(160, 162, 159) 0px 0px 20px;
+}
+
+.poison {
+  background: rgb(183, 99, 207);
+  box-shadow: rgb(183, 99, 207) 0px 0px 20px;
+}
+
+.psychic {
+  background: rgb(250, 133, 129);
+  box-shadow: rgb(250, 133, 129) 0px 0px 20px;
+}
+
+.rock {
+  background: rgb(201, 187, 138);
+  box-shadow: rgb(201, 187, 138) 0px 0px 20px;
+}
+
+.steel {
+  background: rgb(86, 149, 163);
+  box-shadow: rgb(86, 149, 163) 0px 0px 20px;
+}
+
+.water {
+  background: rgb(83, 157, 223);
+  box-shadow: rgb(83, 157, 223) 0px 0px 20px;
+}
