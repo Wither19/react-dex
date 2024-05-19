@@ -224,7 +224,7 @@
       function moveFetch() {
         $(".movesModal tbody").html("");
         for (let m = 0; m <= 100; m++) {
-          fetch(`cur.moves[m].move.url`)
+          fetch(cur.moves[m].move.url)
             .then((response) => response.json())
             .then((data) => {
               $(".movesModal tbody").append(`<tr>
