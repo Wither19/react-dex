@@ -86,6 +86,7 @@
       const root = document.querySelector(".data");
       const list = document.querySelector(".pkmnList");
       var a = 1;
+      var c = "";
 
       PkmnList();
 
@@ -227,7 +228,7 @@
           fetch(cur.moves[m].move.url)
             .then((response) => response.json())
             .then((data) => {
-              $(".movesModal tbody").append(`<tr>
+              $(".movesModal tbody").append(`<tr id="${data.id}">
             <td>${data.name.replace("-", " ")}</td>
             <td><div class="icon ${
               data.type.name
@@ -256,6 +257,15 @@
       $(".bigolx").click(function () {
         $(".movesWrapper").addClass("hidden");
       });
+
+      $("tr").mouseenter(function (event) {
+        c = event.currentTarget.id;
+        fetch(`https://pokeapi.co/api/v2/move/${c}`)
+          .then((response) => response.json())
+          .then((data) => {});
+      });
+
+      $("tr").mouseleave(function () {});
 
       $(document).keydown(function (e) {
         if (e.key === "s" && e.altKey) {
