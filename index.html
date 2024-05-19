@@ -120,7 +120,7 @@
       }
 
       function PkmnList() {
-        fetch(`https:/pokeapi.co/api/v2/pokemon/${a}`)
+        fetch(`https://pokeapi.co/api/v2/pokemon/${a}`)
           .then((response) => response.json())
           .then((data) => {
             cur = data;
@@ -224,7 +224,7 @@
         cur.moves.map((move) =>
           $(".movesModal tbody").append(`<tr>
             <td>${move.move.name.replace("-", " ")}</td>
-            <td></td>
+            <td>${move.move}</td>
             <td></td>
             <td></td>
             <td></td>
