@@ -221,16 +221,24 @@
 
       function moveFetch() {
         $(".movesModal tbody").html("");
-        cur.moves.map((move) =>
-          $(".movesModal tbody").append(`<tr>
-            <td>${move.move.name.replace("-", " ")}</td>
-            <td>${move.move}</td>
+        for (let m = 0; m <= 100; m++) {
+          fetch(`cur.moves[m].move.url`)
+            .then((response) => response.json())
+            .then((data) => {
+              $(".movesModal tbody").append(`<tr>
+            <td>${data.name.replace("-", " ")}</td>
+            <td><div class="icon ${
+              data.type.name
+            }"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${
+                data.type.name
+              }.svg"></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            </tr>`)
-        );
+            </tr>`);
+            });
+        }
       }
 
       $(".art").click(function () {
