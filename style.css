@@ -202,6 +202,12 @@ table {
   padding: 0px;
 }
 
+table .icon {
+  width: 40px;
+  height: 40px;
+  margin: 8px auto;
+}
+
 table,
 td,
 th {

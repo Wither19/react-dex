@@ -28,8 +28,8 @@
               <th>Move</th>
               <th>Type</th>
               <th>Category</th>
-              <th>PP</th>
               <th>Power</th>
+              <th>PP</th>
               <th>Accuracy</th>
             </tr>
           </thead>
@@ -234,10 +234,12 @@
             }"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${
                 data.type.name
               }.svg"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><img src="https://bulbapedia.bulbagarden.net/wiki/File:${
+              data.damage_class.name
+            }IC.png"></td>
+            <td>${data.power}</td>
+            <td>${data.pp}</td>
+            <td>${data.accuracy}%</td>
             </tr>`);
             });
         }
