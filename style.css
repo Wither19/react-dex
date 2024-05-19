@@ -209,6 +209,11 @@ table .icon {
   margin: 8px auto;
 }
 
+thead {
+  position: sticky;
+  top: 0px;
+}
+
 table,
 td,
 th {
