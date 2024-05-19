@@ -172,12 +172,12 @@ h2:has(+ .stats) {
   position: absolute;
   font-size: 48px;
   top: -16px;
-  left: 145%;
+  left: 155%;
 }
 
 .modalWalls {
   background: white;
-  width: 50%;
+  width: 53%;
   height: 50%;
   position: relative;
   top: 25%;
