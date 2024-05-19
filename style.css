@@ -214,6 +214,10 @@ thead {
   top: 0px;
 }
 
+tr td:nth-child(1) {
+  font-weight: bold;
+}
+
 table,
 td,
 th {
