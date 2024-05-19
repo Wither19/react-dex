@@ -210,12 +210,13 @@ th {
 
 .showMoves {
   position: absolute;
-  top: 62.5%;
+  top: 72%;
   left: 55%;
   width: 25%;
   text-align: center;
   padding: 6px 0px;
   cursor: pointer;
+  font-size: 20px;
   border-radius: 10px;
   box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
 }
