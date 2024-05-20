@@ -388,8 +388,7 @@ tr td:nth-child(1) {
   box-shadow: rgb(83, 157, 223) 0px 0px 20px;
 }
 
-
-@media screen and (min-width: 1400px) {
+@media screen and (max-width: 1400px) {
   ul {
     position: absolute;
     top: 0;
