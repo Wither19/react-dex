@@ -134,6 +134,9 @@
       }
 
       function pkmnData() {
+        $(`li:eq(${a - 1})`).addClass("selected");
+        $(`li:lt(${a - 1})`).removeClass("selected");
+        $(`li:gt(${a - 1})`).removeClass("selected");
         $("h1").text(`#${cur.id} - ${cur.name}`);
         $(".art.reg").attr(
           "src",
