@@ -147,37 +147,37 @@
         $(".hp").text(`${cur.stats[0].base_stat}`);
 
         $(".hp").css({
-          width: `${cur.stats[0].base_stat}px`,
+          width: `${cur.stats[0].base_stat * 1.1}px`,
         });
 
         $(".atk").text(`${cur.stats[1].base_stat}`);
 
         $(".atk").css({
-          width: `${cur.stats[1].base_stat}px`,
+          width: `${cur.stats[1].base_stat * 1.1}px`,
         });
 
         $(".def").text(`${cur.stats[2].base_stat}`);
 
         $(".def").css({
-          width: `${cur.stats[2].base_stat}px`,
+          width: `${cur.stats[2].base_stat * 1.1}px`,
         });
 
         $(".spAtk").text(`${cur.stats[3].base_stat}`);
 
         $(".spAtk").css({
-          width: `${cur.stats[3].base_stat}px`,
+          width: `${cur.stats[3].base_stat * 1.1}px`,
         });
 
         $(".spDef").text(`${cur.stats[4].base_stat}`);
 
         $(".spDef").css({
-          width: `${cur.stats[4].base_stat}px`,
+          width: `${cur.stats[4].base_stat * 1.1}px`,
         });
 
         $(".spd").text(`${cur.stats[5].base_stat}`);
 
         $(".spd").css({
-          width: `${cur.stats[5].base_stat}px`,
+          width: `${cur.stats[5].base_stat * 1.1}px`,
         });
 
         $(".bst").text(
@@ -258,8 +258,9 @@
         $(".movesWrapper").addClass("hidden");
       });
 
-      $("tr").mouseenter(function (event) {
+      $("tr").mouseover(function (event) {
         c = event.currentTarget.id;
+        console.log(c);
         fetch(`https://pokeapi.co/api/v2/move/${c}`)
           .then((response) => response.json())
           .then((data) => {

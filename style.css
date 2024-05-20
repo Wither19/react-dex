@@ -198,6 +198,8 @@ h2:has(+ .stats) {
 table {
   overflow-y: scroll;
   height: 335px;
+  max-width: 920px;
+  min-width: 920px;
   display: block;
   background: whitesmoke;
   padding: 0px;
