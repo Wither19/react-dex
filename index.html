@@ -260,15 +260,12 @@
 
       $("tr").mouseenter(function (event) {
         c = event.currentTarget.id;
-        alert(c);
         fetch(`https://pokeapi.co/api/v2/move/${c}`)
           .then((response) => response.json())
           .then((data) => {
             let flavorFind = data.flavor_text_entries.findLast(
               (entry) => entry.language === "en"
             ).flavor_text;
-
-            console.log(flavorFind);
           });
       });
 
