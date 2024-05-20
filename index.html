@@ -16,6 +16,17 @@
     <div id="app">
       <div class="pkmnList"></div>
     </div>
+    <div class="infoWrapper hidden">
+      <div class="modalActions">
+        <div class="bigolx">x</div>
+      </div>
+      <div class="modalWalls"></div>
+      <div class="infoModal">
+        <center>
+          <h2></h2>
+        </center>
+      </div>
+    </div>
     <div class="movesWrapper hidden">
       <div class="modalActions">
         <div class="bigolx">x</div>
@@ -61,7 +72,10 @@
         <h3>Total</h3>
         <div class="bar bst"></div>
       </div>
-      <div class="showMoves">Show Moves</div>
+      <div class="buttons">
+        <div class="showMoves">Show Moves</div>
+        <div class="showInfo">More Info</div>
+      </div>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.7.1.js"
@@ -215,6 +229,7 @@
         );
         addAbilities();
         moveFetch();
+        otherInfo();
       }
 
       function addAbilities() {
@@ -227,28 +242,42 @@
 
       function moveFetch() {
         $(".movesModal tbody").html("");
-        for (let m = 0; m <= 100; m++) {
+        for (let m = 0; m <= 30; m++) {
           fetch(cur.moves[m].move.url)
             .then((response) => response.json())
             .then((data) => {
-              $(".movesModal tbody").append(`<tr id="${data.id}">
-            <td id="${data.id}">${data.name.replace("-", " ")}</td>
-            <td id="${data.id}"><div class="icon ${
+              $(".movesModal tbody").append(`
+          <tr id="${data.id}">
+            <td>${data.name.replace("-", " ")}</td>
+            <td>
+              <div class="icon ${
                 data.type.name
               }"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${
                 data.type.name
-              }.svg"></td>
-            <td id="${
-              data.id
-            }"><img src="https://raw.githubusercontent.com/Wither19/react-dex/main/${
-                data.damage_class.name
-              }.png"></td>
-            <td id="${data.id}">${data.power}</td>
-            <td id="${data.id}">${data.pp}</td>
-            <td id="${data.id}">${data.accuracy}%</td>
+              }.svg">
+            </td>
+            <td id="${data.id}">
+            <img src="https://raw.githubusercontent.com/Wither19/react-dex/main/${
+              data.damage_class.name
+            }.png">
+            </td>
+            <td>${data.power}</td>
+            <td>${data.pp}</td>
+            <td>${data.accuracy}%</td>
             </tr>`);
             });
         }
+      }
+
+      function otherInfo() {
+        fetch(`https://pokeapi.co/api/v2/pokemon-species/${a}`)
+          .then((response) => response.json())
+          .then((data) => {
+            let genus = data.genera.find(
+              (genera) => genera.language.name === "en"
+            ).genus;
+            $(".infoWrapper h2").text();
+          });
       }
 
       $(".art").click(function () {
@@ -258,9 +287,13 @@
       $(".showMoves").click(function () {
         $(".movesWrapper").removeClass("hidden");
       });
+      $(".showInfo").click(function () {
+        $(".infoWrapper").removeClass("hidden");
+      });
 
       $(".bigolx").click(function () {
         $(".movesWrapper").addClass("hidden");
+        $(".infoWrapper").addClass("hidden");
       });
 
       $("tr *").mouseenter(function (event) {
@@ -297,6 +330,7 @@
         }
         if (e.which == 27) {
           $(".movesWrapper").addClass("hidden");
+          $(".infoWrapper").addClass("hidden");
         }
       });
 
