@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -240,6 +241,7 @@
         moveFetch();
         otherInfo();
         heightAndWeight();
+        scrollPkmn();
       }
 
       function addAbilities() {
@@ -332,12 +334,12 @@
           a = Math.floor(Math.random() * 1025 + 1);
           PkmnList();
         }
-        if (e.which === 37 && e.altKey) {
+        if (e.which === 38 && e.altKey) {
           e.preventDefault();
           a--;
           PkmnList();
         }
-        if (e.which === 39 && e.altKey) {
+        if (e.which === 40 && e.altKey) {
           e.preventDefault();
           a++;
           PkmnList();
@@ -347,6 +349,10 @@
           $(".infoWrapper").addClass("hidden");
         }
       });
+
+      function scrollPkmn() {
+        $("ul").scrollTo($(`li:eq(${a})`));
+      }
 
       ReactDOM.render(<Pokedex />, list);
     </script>
