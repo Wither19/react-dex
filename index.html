@@ -258,9 +258,9 @@
         $(".movesWrapper").addClass("hidden");
       });
 
-      $("tr").mouseover(function (event) {
+      $("tr").mouseenter(function (event) {
         c = event.currentTarget.id;
-        console.log(c);
+        alert(c);
         fetch(`https://pokeapi.co/api/v2/move/${c}`)
           .then((response) => response.json())
           .then((data) => {
