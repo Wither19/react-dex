@@ -24,6 +24,14 @@
       <div class="infoModal">
         <center>
           <h2></h2>
+          <img src="" alt="" class="art reg" />
+          <img src="" alt="" class="art shiny hidden" />
+          <p class="entry"></p>
+          <div class="bio">
+            <div class="height"></div>
+            <br /><br />
+            <div class="weight"></div>
+          </div>
         </center>
       </div>
     </div>
@@ -227,9 +235,11 @@
             `<div class="icon ${type.type.name}"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${type.type.name}.svg"></div>`
           )
         );
+
         addAbilities();
         moveFetch();
         otherInfo();
+        heightAndWeight();
       }
 
       function addAbilities() {
@@ -276,7 +286,25 @@
             let genus = data.genera.find(
               (genera) => genera.language.name === "en"
             ).genus;
-            $(".infoWrapper h2").text("The " + genus);
+            $(".infoWrapper h2").text(`${data.name}: The ${genus}`);
+            let dexEntry = data.flavor_text_entries.findLast(
+              (entry) => entry.language.name === "en"
+            ).flavor_text;
+            $(".entry").text(`"${dexEntry}"`);
+          });
+      }
+
+      function heightAndWeight() {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${a}`)
+          .then((response) => response.json())
+          .then((data) => {
+            let foot = Math.floor((data.height * 3.937) / 12);
+            let inch = ((data.height * 3.937) % 12).toFixed();
+            let meter = (data.height / 10).toFixed(1);
+            let pound = (data.weight / 4.536).toFixed(1);
+            let kilogram = (data.weight / 10).toFixed(1);
+            $(".height").text(`Height: ${foot}'${inch}" (${meter} m)`);
+            $(".weight").text(`Weight: ${pound} lbs. (${kilogram} kg)`);
           });
       }
 
@@ -295,20 +323,6 @@
         $(".movesWrapper").addClass("hidden");
         $(".infoWrapper").addClass("hidden");
       });
-
-      $("tr *").mouseenter(function (event) {
-        c = event.currentTarget.id;
-        fetch(`https://pokeapi.co/api/v2/move/${c}`)
-          .then((response) => response.json())
-          .then((data) => {
-            let flavorFind = data.flavor_text_entries.findLast(
-              (entry) => entry.language === "en"
-            ).flavor_text;
-            alert(flavorFind);
-          });
-      });
-
-      $("tr").mouseleave(function () {});
 
       $(document).keydown(function (e) {
         if (e.key === "s" && e.altKey) {

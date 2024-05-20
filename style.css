@@ -168,9 +168,23 @@ h2:has(+ .stats) {
 .infoModal {
   background: whitesmoke;
   width: 49.5%;
-  height: 45%;
+  top: 27.25% !important;
+  height: 52.5%;
   z-index: 3;
   overflow-y: scroll;
+}
+
+.entry {
+  margin: 16px 8%;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 145%;
+}
+
+.bio {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
 .modalActions {
@@ -248,7 +262,7 @@ tr td:nth-child(1) {
 .showMoves,
 .showInfo {
   text-align: center;
-  padding: 4px 6px;
+  padding: 6px 10px;
   width: auto;
   cursor: pointer;
   font-size: 20px;
@@ -501,6 +515,16 @@ tr td:nth-child(1) {
       left: 0px;
       z-index: 4;
       display: block;
+  }
+
+  .infoWrapper h2 {
+      text-transform: capitalize;
+  }
+
+  .infoWrapper .art {
+      position: relative;
+      left: 0%;
+      width: 180px !important;
   }
 
   .movesModal {
