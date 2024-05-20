@@ -32,6 +32,8 @@
             <div class="height"></div>
             <br /><br />
             <div class="weight"></div>
+            <br /><br />
+            <div class="tier" style="font-weight: bold;"></div>
           </div>
         </center>
       </div>
@@ -241,7 +243,7 @@
         moveFetch();
         otherInfo();
         heightAndWeight();
-        scrollPkmn();
+        fetchTier();
       }
 
       function addAbilities() {
@@ -310,6 +312,20 @@
           });
       }
 
+      function fetchTier() {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${a}`)
+          .then((response) => response.json())
+          .then((data) => {
+            fetch(
+              "https://raw.githubusercontent.com/pkmn/ps/main/dex/data/formats-data.json"
+            )
+              .then((response) => response.json())
+              .then((t) => {
+                $(".tier").text(t["9"][data.name.replace("-", "")].tier);
+              });
+          });
+      }
+
       $(".art").click(function () {
         $(".art").toggleClass("hidden");
       });
@@ -349,10 +365,6 @@
           $(".infoWrapper").addClass("hidden");
         }
       });
-
-      function scrollPkmn() {
-        $("ul").scrollTo($(`li:eq(${a})`));
-      }
 
       ReactDOM.render(<Pokedex />, list);
     </script>
