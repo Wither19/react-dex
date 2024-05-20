@@ -229,18 +229,20 @@
             .then((response) => response.json())
             .then((data) => {
               $(".movesModal tbody").append(`<tr id="${data.id}">
-            <td>${data.name.replace("-", " ")}</td>
-            <td><div class="icon ${
-              data.type.name
-            }"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${
+            <td id="${data.id}">${data.name.replace("-", " ")}</td>
+            <td id="${data.id}"><div class="icon ${
+                data.type.name
+              }"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${
                 data.type.name
               }.svg"></td>
-            <td><img src="https://raw.githubusercontent.com/Wither19/react-dex/main/${
-              data.damage_class.name
-            }.png"></td>
-            <td>${data.power}</td>
-            <td>${data.pp}</td>
-            <td>${data.accuracy}%</td>
+            <td id="${
+              data.id
+            }"><img src="https://raw.githubusercontent.com/Wither19/react-dex/main/${
+                data.damage_class.name
+              }.png"></td>
+            <td id="${data.id}">${data.power}</td>
+            <td id="${data.id}">${data.pp}</td>
+            <td id="${data.id}">${data.accuracy}%</td>
             </tr>`);
             });
         }
@@ -258,7 +260,7 @@
         $(".movesWrapper").addClass("hidden");
       });
 
-      $("tr").mouseenter(function (event) {
+      $("tr *").mouseenter(function (event) {
         c = event.currentTarget.id;
         fetch(`https://pokeapi.co/api/v2/move/${c}`)
           .then((response) => response.json())
@@ -266,6 +268,7 @@
             let flavorFind = data.flavor_text_entries.findLast(
               (entry) => entry.language === "en"
             ).flavor_text;
+            alert(flavorFind);
           });
       });
 
