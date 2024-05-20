@@ -262,7 +262,13 @@
         c = event.currentTarget.id;
         fetch(`https://pokeapi.co/api/v2/move/${c}`)
           .then((response) => response.json())
-          .then((data) => {});
+          .then((data) => {
+            let flavorFind = data.flavor_text_entries.findLast(
+              (entry) => entry.language === "en"
+            ).flavor_text;
+
+            console.log(flavorFind);
+          });
       });
 
       $("tr").mouseleave(function () {});
