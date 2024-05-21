@@ -310,6 +310,8 @@
             let kilogram = (data.weight / 10).toFixed(1);
             if (foot === 0) {
               $(".height").text(`Height: ${inch}" (${meter} m)`);
+            } else if (inch === 12) {
+              $(".height").text(`Height: ${foot}' (${meter} m)`);
             } else {
               $(".height").text(`Height: ${foot}'${inch}" (${meter} m)`);
             }
