@@ -201,6 +201,16 @@ table :is(th, td) {
   text-align: center;
 }
 
+thead {
+  position: sticky;
+  top: -2px;
+}
+
+th {
+  border: 1px solid rgb(142, 142, 142);
+  background: white;
+}
+
 td {
   border-spacing: 0;
 }
@@ -357,7 +367,8 @@ td .icon {
     list-style-type: none;
     margin-left: 2px;
     overflow-y: scroll;
-    height: 910px;
+    height: 95%;
+    border-radius: 10px;
     background: rgba(14, 31, 68, 0.7);
   }
 
@@ -530,7 +541,7 @@ td .icon {
     width: 49.5%;
     top: 15.5%;
     left: 24.5%;
-    height: 57.5%;
+    height: 63%;
     z-index: 3;
     overflow-y: scroll;
     border-radius: 8px;

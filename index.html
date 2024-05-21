@@ -23,6 +23,9 @@
       <div class="infoModal">
         <center>
           <h2></h2>
+          <div class="bio">
+            <div class="evolvesFrom"></div>
+          </div>
           <img src="" alt="" class="art reg" />
           <img src="" alt="" class="art shiny hidden" />
           <p class="entry"></p>
@@ -281,6 +284,18 @@
               (entry) => entry.language.name === "en"
             ).flavor_text;
             $(".entry").text(`"${dexEntry}"`);
+
+            if (data.evolves_from_species) {
+              fetch(data.evolves_from_species.url)
+                .then((response) => response.json())
+                .then((evo) => {
+                  $(".evolvesFrom").html(
+                    `<span style="font-weight: bold;">Evolves From: </span><br><img src="https://raw.githubusercontent.com/Wither19/pokerogue/main/public/images/pokemon/icons/${evo.id}.png"> <span style="text-transform: capitalize;">${evo.name}</span>`
+                  );
+                });
+            } else {
+              $(".evolvesFrom").html("");
+            }
           });
       }
 
@@ -344,11 +359,13 @@
           e.preventDefault();
           a--;
           PkmnList();
+          hide();
         }
         if (e.which === 40 && e.altKey) {
           e.preventDefault();
           a++;
           PkmnList();
+          hide();
         }
         if (e.which == 27) {
           hide();
