@@ -616,4 +616,8 @@ table {
     width: 60%;
     margin: 20%;
   }
+
+  .evolvesFrom img {
+    width: 48px;
+}
 }
