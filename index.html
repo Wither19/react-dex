@@ -1,366 +1,572 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.3/jquery.scrollTo.min.js"></script>
-    <title>Document</title>
-  </head>
-  <body>
-    <div id="app">
-      <div class="pkmnList"></div>
-    </div>
-    <div class="infoWrapper hidden">
-      <div class="modalActions"></div>
-      <div class="modalWalls"></div>
-      <div class="infoModal">
-        <center>
-          <h2></h2>
-          <img src="" alt="" class="art reg" />
-          <img src="" alt="" class="art shiny hidden" />
-          <p class="entry"></p>
-          <div class="bio">
-            <div class="height"></div>
-            <br /><br />
-            <div class="weight"></div>
-            <br /><br />
-            <div class="tier" style="font-weight: bold;"></div>
-          </div>
-        </center>
-      </div>
-    </div>
-    <div class="movesWrapper hidden">
-      <div class="modalActions"></div>
-      <div class="modalWalls"></div>
-      <div class="movesModal">
-        <table>
-          <thead>
-            <tr>
-              <th>Move</th>
-              <th>Type</th>
-              <th>Category</th>
-              <th>Power</th>
-              <th>PP</th>
-              <th>Accuracy</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-    <div class="data">
-      <h1></h1>
-      <img class="art reg" />
-      <img class="art shiny hidden" />
-      <div class="types"></div>
-      <h2>Abilities</h2>
-      <div class="abilities"></div>
-      <h2>Stats</h2>
-      <div class="stats">
-        <h3>HP</h3>
-        <div class="bar hp"></div>
-        <h3>Attack</h3>
-        <div class="bar atk"></div>
-        <h3>Defense</h3>
-        <div class="bar def"></div>
-        <h3>Sp. Attack</h3>
-        <div class="bar spAtk"></div>
-        <h3>Sp. Defense</h3>
-        <div class="bar spDef"></div>
-        <h3>Speed</h3>
-        <div class="bar spd"></div>
-        <h3>Total</h3>
-        <div class="bar bst"></div>
-      </div>
-      <div class="buttons">
-        <div class="showMoves">Show Moves</div>
-        <div class="showInfo">More Info</div>
-      </div>
-    </div>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.js"
-      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      crossorigin
-      src="https://unpkg.com/react@18/umd/react.production.min.js"
-    ></script>
-    <script
-      crossorigin
-      src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"
-    ></script>
-    <script
-      type="text/javascript"
-      src="https://unpkg.com/babel-standalone@6/babel.js"
-    ></script>
-    <script src="ntldex.js"></script>
-    <script type="text/babel">
-      var cur = {};
-      const root = document.querySelector(".data");
-      const list = document.querySelector(".pkmnList");
-      var a = 1;
-      var c = "";
+:root {
+  font-family: "open sans", sans-serif;
+}
 
-      PkmnList();
+body {
+  overflow: hidden;
+}
 
-      class Pokedex extends React.Component {
-        constructor(props) {
-          super(props);
-        }
+ul {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 33%;
+  list-style-type: none;
+  margin-left: 2px;
+  overflow-y: scroll;
+  height: 910px;
+  background: rgba(14, 31, 68, 0.7);
+}
 
-        render() {
-          return (
-            <div>
-              <ul>
-                {dex.map((item, i) => (
-                  <li
-                    onClick={() => {
-                      a = item.entry_number;
-                      PkmnList();
-                    }}
-                    key={item.id}
-                  >
-                    <img
-                      src={`https://raw.githubusercontent.com/Wither19/pokerogue/main/public/images/pokemon/icons/${item.entry_number}.png`}
-                    />
-                    <span style={{ fontWeight: "bold" }}>
-                      #{item.entry_number}
-                    </span>{" "}
-                    {item.pokemon_species.name}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        }
-      }
+li {
+  text-transform: capitalize;
+  font-size: 22px;
+  height: 48px;
+  margin: 8px 6px;
+  cursor: pointer;
+  vertical-align: middle;
+  user-select: none;
+  color: #ffffff;
+  border-radius: 8px;
+  transition: background-color 0.1s;
+}
 
-      function PkmnList() {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${a}`)
-          .then((response) => response.json())
-          .then((data) => {
-            cur = data;
-            console.log(cur);
-            pkmnData();
-          })
-          .catch((error) => console.log(error));
-      }
+li:hover {
+  background: rgba(102, 110, 231, 0.75);
+}
 
-      function pkmnData() {
-        $(`li:eq(${a - 1})`).addClass("selected");
-        $(`li:lt(${a - 1})`).removeClass("selected");
-        $(`li:gt(${a - 1})`).removeClass("selected");
-        $("h1").text(`#${cur.id} - ${cur.name}`);
-        $(".art.reg").attr("src", cur.sprites.other["home"].front_default);
-        $(".art.shiny").attr("src", cur.sprites.other["home"].front_shiny);
+li.selected {
+  background-color: rgba(255, 234, 4, 0.65);
+}
 
-        $(".hp").text(`${cur.stats[0].base_stat}`);
+li img {
+  transform: scale(1.2) translate(-2px, 4px);
+}
 
-        $(".hp").css({
-          width: `${cur.stats[0].base_stat * 1.1}px`,
-        });
+.data {
+  position: absolute;
+  top: 3%;
+  left: 45%;
+  width: 30%;
+  height: 100%;
+  z-index: 1;
+  display: block;
+}
 
-        $(".atk").text(`${cur.stats[1].base_stat}`);
+.data h1 {
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 36px;
+  position: relative;
+  left: 18%;
+}
 
-        $(".atk").css({
-          width: `${cur.stats[1].base_stat * 1.1}px`,
-        });
+.art {
+  display: inherit;
+  position: relative;
+  left: 37%;
+  width: 350px;
+}
 
-        $(".def").text(`${cur.stats[2].base_stat}`);
+.art.hidden {
+  display: none;
+}
 
-        $(".def").css({
-          width: `${cur.stats[2].base_stat * 1.1}px`,
-        });
+.abilities {
+  position: absolute;
+  top: 15%;
+  left: -18.75%;
+  width: 200px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+}
 
-        $(".spAtk").text(`${cur.stats[3].base_stat}`);
+h2:has(+ .abilities) {
+  position: absolute;
+  top: 8%;
+  left: -10%;
+}
 
-        $(".spAtk").css({
-          width: `${cur.stats[3].base_stat * 1.1}px`,
-        });
+.abilities div {
+  text-transform: capitalize;
+  text-align: center;
+  margin: 8px 0;
+  font-size: 22px;
+}
 
-        $(".spDef").text(`${cur.stats[4].base_stat}`);
+ha {
+  font-weight: bold;
+}
 
-        $(".spDef").css({
-          width: `${cur.stats[4].base_stat * 1.1}px`,
-        });
+ha.false {
+  display: none !important;
+}
 
-        $(".spd").text(`${cur.stats[5].base_stat}`);
+.types {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: absolute;
+  left: 37%;
+  width: 350px;
+}
 
-        $(".spd").css({
-          width: `${cur.stats[5].base_stat * 1.1}px`,
-        });
+h2:has(+ .stats) {
+  position: absolute;
+  top: 8%;
+  left: 141%;
+}
 
-        $(".bst").text(
-          cur.stats[0].base_stat +
-            cur.stats[1].base_stat +
-            cur.stats[2].base_stat +
-            cur.stats[3].base_stat +
-            cur.stats[4].base_stat +
-            cur.stats[5].base_stat
-        );
+.stats {
+  position: absolute;
+  top: 15%;
+  left: 120%;
+  width: 300px;
+  padding-bottom: 24px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+}
 
-        $(".bst").css({
-          width: `${
-            (cur.stats[0].base_stat +
-              cur.stats[1].base_stat +
-              cur.stats[2].base_stat +
-              cur.stats[3].base_stat +
-              cur.stats[4].base_stat +
-              cur.stats[5].base_stat) /
-            3
-          }px`,
-        });
+.stats h3 {
+  text-align: center;
+  margin: 20px 0;
+}
 
-        $(".abilities").text("");
+.bar {
+  height: 24px;
+  background: linear-gradient(90deg, rgb(67, 140, 214), rgb(128, 187, 247));
+  margin: 0px 8px 0px 12px;
+  font-size: 18px;
+  text-align: center;
+  color: white;
+}
 
-        $(".types").text("");
+.infoModal {
+  background: whitesmoke;
+  width: 49.5%;
+  top: 27.25%;
+  height: 52.5%;
+  z-index: 3;
+  overflow-y: scroll;
+}
 
-        cur.types.map((type) =>
-          $(".types").append(
-            `<div class="icon ${type.type.name}"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${type.type.name}.svg"></div>`
-          )
-        );
+.entry {
+  margin: 16px 8%;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 145%;
+}
 
-        addAbilities();
-      }
+.bio {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
 
-      function addAbilities() {
-        cur.abilities.map((ability) =>
-          $(".abilities").append(
-            `<div>${ability.ability.name.replace("-", " ")}</div>`
-          )
-        );
-      }
+.movesWrapper,
+.infoWrapper {
+  background-color: rgb(0 0 0 / 35%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 4;
+  display: block;
+}
 
-      function moveFetch() {
-        $(".movesModal tbody").html("");
-        for (let m = 0; m <= 30; m++) {
-          fetch(cur.moves[m].move.url)
-            .then((response) => response.json())
-            .then((data) => {
-              $(".movesModal tbody").append(`
-          <tr id="${data.id}">
-            <td>${data.name.replace("-", " ")}</td>
-            <td>
-              <div class="icon ${
-                data.type.name
-              }"><img src="https://duiker101.github.io/pokemon-type-svg-icons/icons/${
-                data.type.name
-              }.svg">
-            </td>
-            <td id="${data.id}">
-            <img src="https://raw.githubusercontent.com/Wither19/react-dex/main/${
-              data.damage_class.name
-            }.png">
-            </td>
-            <td>${data.power}</td>
-            <td>${data.pp}</td>
-            <td>${data.accuracy}%</td>
-            </tr>`);
-            });
-        }
-      }
+.movesWrapper.hidden,
+.infoWrapper.hidden {
+  display: none;
+}
 
-      function otherInfo() {
-        fetch(`https://pokeapi.co/api/v2/pokemon-species/${a}`)
-          .then((response) => response.json())
-          .then((data) => {
-            let genus = data.genera.find(
-              (genera) => genera.language.name === "en"
-            ).genus;
-            $(".infoWrapper h2").text(`${data.name}: The ${genus}`);
-            let dexEntry = data.flavor_text_entries.findLast(
-              (entry) => entry.language.name === "en"
-            ).flavor_text;
-            $(".entry").text(`"${dexEntry}"`);
-          });
-      }
+.showMoves,
+.showInfo {
+  text-align: center;
+  padding: 6px 10px;
+  width: auto;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+}
 
-      function heightAndWeight() {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${a}`)
-          .then((response) => response.json())
-          .then((data) => {
-            let foot = Math.floor((data.height * 3.937) / 12);
-            let inch = ((data.height * 3.937) % 12).toFixed();
-            let meter = (data.height / 10).toFixed(1);
-            let pound = (data.weight / 4.536).toFixed(1);
-            let kilogram = (data.weight / 10).toFixed(1);
-            if (foot === 0) {
-              $(".height").text(`Height: ${inch}" (${meter} m)`);
-            } else {
-              $(".height").text(`Height: ${foot}'${inch}" (${meter} m)`);
-            }
-            $(".weight").text(`Weight: ${pound} lbs. (${kilogram} kg)`);
-          });
-      }
+.showMoves:hover,
+.showInfo:hover {
+  background: rgba(102, 110, 231, 0.75);
+  color: #ffffff;
+}
 
-      function fetchTier() {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${a}`)
-          .then((response) => response.json())
-          .then((data) => {
-            fetch(
-              "https://raw.githubusercontent.com/pkmn/ps/main/dex/data/formats-data.json"
-            )
-              .then((response) => response.json())
-              .then((t) => {
-                $(".tier").text(t["9"][data.name.replace("-", "")].tier);
-              });
-          });
-      }
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 55%;
+  left: 70%;
+}
 
-      $(".art").click(function () {
-        $(".art").toggleClass("hidden");
-      });
+.icon {
+  border-radius: 100%;
+  height: 105px;
+  width: 105px;
+  margin: 24px auto;
+  transition: all 200ms ease 0s;
+  cursor: pointer;
+  user-select: none;
+}
 
-      $(".showMoves").click(function () {
-        $(".movesWrapper").removeClass("hidden");
-        moveFetch();
-      });
-      $(".showInfo").click(function () {
-        $(".infoWrapper").removeClass("hidden");
-        otherInfo();
-        heightAndWeight();
-        fetchTier();
-      });
+.icon:hover {
+  filter: saturate(200%);
+  transform: scale(1.1);
+  cursor: pointer;
+}
 
-      $(document).keydown(function (e) {
-        if (e.key === "s" && e.altKey) {
-          $(".art").toggleClass("hidden");
-        }
-        if (e.key === "r" && e.altKey) {
-          a = Math.floor(Math.random() * 1025 + 1);
-          PkmnList();
-          hide();
-        }
-        if (e.which === 38 && e.altKey) {
-          e.preventDefault();
-          a--;
-          PkmnList();
-        }
-        if (e.which === 40 && e.altKey) {
-          e.preventDefault();
-          a++;
-          PkmnList();
-        }
-        if (e.which == 27) {
-          hide();
-        }
-      });
+.icon img {
+  height: 60%;
+  width: 60%;
+  margin: 20%;
+}
 
-      function hide() {
-        $(".movesWrapper").addClass("hidden");
-        $(".infoWrapper").addClass("hidden");
-      }
+.bug {
+  background: rgb(146, 188, 44);
+  box-shadow: rgb(146, 188, 44) 0px 0px 20px;
+}
 
-      ReactDOM.render(<Pokedex />, list);
-    </script>
-  </body>
-</html>
+.dark {
+  background: rgb(89, 87, 97);
+  box-shadow: rgb(89, 87, 97) 0px 0px 20px;
+}
+
+.dragon {
+  background: rgb(12, 105, 200);
+  box-shadow: rgb(12, 105, 200) 0px 0px 20px;
+}
+
+.electric {
+  background: rgb(242, 217, 78);
+  box-shadow: rgb(242, 217, 78) 0px 0px 20px;
+}
+
+.fire {
+  background: rgb(251, 165, 76);
+  box-shadow: rgb(251, 165, 76) 0px 0px 20px;
+}
+
+.fairy {
+  background: rgb(238, 144, 230);
+  box-shadow: rgb(238, 144, 230) 0px 0px 20px;
+}
+
+.fighting {
+  background: rgb(211, 66, 95);
+  box-shadow: rgb(211, 66, 95) 0px 0px 20px;
+}
+
+.flying {
+  background: rgb(161, 187, 236);
+  box-shadow: rgb(161, 187, 236) 0px 0px 20px;
+}
+
+.ghost {
+  background: rgb(95, 109, 188);
+  box-shadow: rgb(95, 109, 188) 0px 0px 20px;
+}
+
+.grass {
+  background: rgb(95, 189, 88);
+  box-shadow: rgb(95, 189, 88) 0px 0px 20px;
+}
+
+.ground {
+  background: rgb(218, 124, 77);
+  box-shadow: rgb(218, 124, 77) 0px 0px 20px;
+}
+
+.ice {
+  background: rgb(117, 208, 193);
+  box-shadow: rgb(117, 208, 193) 0px 0px 20px;
+}
+
+.normal {
+  background: rgb(160, 162, 159);
+  box-shadow: rgb(160, 162, 159) 0px 0px 20px;
+}
+
+.poison {
+  background: rgb(183, 99, 207);
+  box-shadow: rgb(183, 99, 207) 0px 0px 20px;
+}
+
+.psychic {
+  background: rgb(250, 133, 129);
+  box-shadow: rgb(250, 133, 129) 0px 0px 20px;
+}
+
+.rock {
+  background: rgb(201, 187, 138);
+  box-shadow: rgb(201, 187, 138) 0px 0px 20px;
+}
+
+.steel {
+  background: rgb(86, 149, 163);
+  box-shadow: rgb(86, 149, 163) 0px 0px 20px;
+}
+
+.water {
+  background: rgb(83, 157, 223);
+  box-shadow: rgb(83, 157, 223) 0px 0px 20px;
+}
+
+
+@media screen and (min-width: 1400px) {
+
+  ul {
+      position: absolute;
+      top: 0;
+      z-index: 0;
+      width: 20%;
+      list-style-type: none;
+      margin-left: 2px;
+      overflow-y: scroll;
+      height: 910px;
+      background: rgba(14, 31, 68, 0.7);
+  }
+
+  li {
+      text-transform: capitalize;
+      font-size: 22px;
+      height: 48px;
+      margin: 8px 6px;
+      cursor: pointer;
+      vertical-align: middle;
+      user-select: none;
+      color: #ffffff;
+      border-radius: 8px;
+      transition: background-color 0.1s;
+  }
+
+  .data {
+      position: absolute;
+      top: 3%;
+      left: 45%;
+      width: 30%;
+      height: 100%;
+      z-index: 1;
+      display: block;
+  }
+
+  .data h1 {
+      text-transform: capitalize;
+      text-align: center;
+      font-size: 32px;
+      position: relative;
+      left: 5.5%;
+  }
+
+  .art {
+      display: inherit;
+      position: relative;
+      left: 24.5%;
+      width: 275px;
+  }
+
+  .abilities {
+      position: absolute;
+      top: 20.5%;
+      left: -45%;
+      width: 200px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+  }
+
+  h2:has(+ .abilities) {
+      position: absolute;
+      top: 8%;
+      left: -34%;
+  }
+
+  .abilities div {
+      text-transform: capitalize;
+      text-align: center;
+      margin: 8px 0;
+      font-size: 22px;
+  }
+
+  .types {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      position: absolute;
+      left: 18.5%;
+      width: 350px;
+  }
+
+  h2:has(+ .stats) {
+      position: absolute;
+      top: 8%;
+      left: 130%;
+  }
+
+  .stats {
+      position: absolute;
+      top: 19.25%;
+      left: 110%;
+      width: 250px;
+      padding-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+  }
+
+  .stats h3 {
+      text-align: center;
+      margin: 12px 0;
+  }
+
+  .bar {
+      height: 20px;
+      background: linear-gradient(90deg, rgb(67, 140, 214), rgb(128, 187, 247));
+      margin: 0px 6px 0px 9px;
+      font-size: 16px;
+      text-align: center;
+      color: white;
+  }
+
+  .movesWrapper,
+  .infoWrapper {
+      background-color: rgb(0 0 0 / 35%);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      z-index: 4;
+      display: block;
+  }
+
+  .movesWrapper.hidden,
+  .infoWrapper.hidden {
+      display: none;
+  }
+
+  .movesModal {
+      position: relative;
+      background: whitesmoke;
+      width: 49.5%;
+      top: 15.5%;
+      left: 24.5%;
+      height: 57.5%;
+      z-index: 3;
+      overflow-y: scroll;
+      border-radius: 8px;
+      box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+  }
+
+  table {
+      height: 300px;
+      width: 100%;
+      overflow-y: scroll;
+  }
+
+  table :is(th, td) {
+      text-align: center;
+  }
+
+  td {
+      border-right: 1px solid rgb(142, 142, 142);
+      border-left: 1px solid rgb(142, 142, 142);
+      border-spacing: 0;
+  }
+
+  td:nth-child(1) {
+      text-transform: capitalize;
+      font-weight: bold;
+  }
+
+  td .icon {
+      width: 40px;
+      height: 40px;
+      margin: 4px auto;
+  }
+
+  .infoModal {
+      position: relative;
+      background: whitesmoke;
+      width: 49.5%;
+      top: 15.5%;
+      left: 24.5%;
+      height: 57.5%;
+      z-index: 3;
+      overflow-y: scroll;
+      border-radius: 8px;
+      box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+  }
+
+  .infoWrapper h2 {
+      text-transform: capitalize;
+  }
+
+  .infoWrapper .art {
+      width: 180px;
+      position: relative;
+      left: 0%;
+  }
+
+  .entry {
+      margin: 16px 27.5%;
+      font-style: italic;
+      font-size: 16px;
+      line-height: 120%;
+      text-align: justify;
+      text-justify: inter-word;
+  }
+
+  .bio {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+  }
+
+  .showMoves,
+  .showInfo {
+      text-align: center;
+      padding: 6px 10px;
+      width: auto;
+      cursor: pointer;
+      font-size: 20px;
+      border-radius: 10px;
+      margin: 12px 10px;
+      box-shadow: 2px 2px 6px rgb(0 0 0 / 33%), -2px 2px 6px rgb(0 0 0 / 33%);
+  }
+
+  .buttons {
+      display: flex;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      position: absolute;
+      top: 75%;
+      left: 25.75%;
+  }
+
+  .icon {
+      border-radius: 100%;
+      height: 105px;
+      width: 105px;
+      margin: 24px auto;
+      transition: all 200ms ease 0s;
+      cursor: pointer;
+      user-select: none;
+  }
+
+  .icon:hover {
+      filter: saturate(200%);
+      transform: scale(1.1);
+      cursor: pointer;
+  }
+
+  .icon img {
+      height: 60%;
+      width: 60%;
+      margin: 20%;
+  }
+}
