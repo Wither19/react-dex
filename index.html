@@ -159,14 +159,8 @@
         $(`li:lt(${a - 1})`).removeClass("selected");
         $(`li:gt(${a - 1})`).removeClass("selected");
         $("h1").text(`#${cur.id} - ${cur.name}`);
-        $(".art.reg").attr(
-          "src",
-          cur.sprites.other["official-artwork"].front_default
-        );
-        $(".art.shiny").attr(
-          "src",
-          cur.sprites.other["official-artwork"].front_shiny
-        );
+        $(".art.reg").attr("src", cur.sprites.other["home"].front_default);
+        $(".art.shiny").attr("src", cur.sprites.other["home"].front_shiny);
 
         $(".hp").text(`${cur.stats[0].base_stat}`);
 
