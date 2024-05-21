@@ -18,9 +18,7 @@
       <div class="pkmnList"></div>
     </div>
     <div class="infoWrapper hidden">
-      <div class="modalActions">
-        <div class="bigolx">x</div>
-      </div>
+      <div class="modalActions"></div>
       <div class="modalWalls"></div>
       <div class="infoModal">
         <center>
@@ -39,9 +37,7 @@
       </div>
     </div>
     <div class="movesWrapper hidden">
-      <div class="modalActions">
-        <div class="bigolx">x</div>
-      </div>
+      <div class="modalActions"></div>
       <div class="modalWalls"></div>
       <div class="movesModal">
         <table>
@@ -240,10 +236,6 @@
         );
 
         addAbilities();
-        moveFetch();
-        otherInfo();
-        heightAndWeight();
-        fetchTier();
       }
 
       function addAbilities() {
@@ -307,7 +299,11 @@
             let meter = (data.height / 10).toFixed(1);
             let pound = (data.weight / 4.536).toFixed(1);
             let kilogram = (data.weight / 10).toFixed(1);
-            $(".height").text(`Height: ${foot}'${inch}" (${meter} m)`);
+            if (foot === 0) {
+              $(".height").text(`Height: ${inch}" (${meter} m)`);
+            } else {
+              $(".height").text(`Height: ${foot}'${inch}" (${meter} m)`);
+            }
             $(".weight").text(`Weight: ${pound} lbs. (${kilogram} kg)`);
           });
       }
@@ -332,14 +328,13 @@
 
       $(".showMoves").click(function () {
         $(".movesWrapper").removeClass("hidden");
+        moveFetch();
       });
       $(".showInfo").click(function () {
         $(".infoWrapper").removeClass("hidden");
-      });
-
-      $(".bigolx").click(function () {
-        $(".movesWrapper").addClass("hidden");
-        $(".infoWrapper").addClass("hidden");
+        otherInfo();
+        heightAndWeight();
+        fetchTier();
       });
 
       $(document).keydown(function (e) {
@@ -349,6 +344,7 @@
         if (e.key === "r" && e.altKey) {
           a = Math.floor(Math.random() * 1025 + 1);
           PkmnList();
+          hide();
         }
         if (e.which === 38 && e.altKey) {
           e.preventDefault();
@@ -361,10 +357,14 @@
           PkmnList();
         }
         if (e.which == 27) {
-          $(".movesWrapper").addClass("hidden");
-          $(".infoWrapper").addClass("hidden");
+          hide();
         }
       });
+
+      function hide() {
+        $(".movesWrapper").addClass("hidden");
+        $(".infoWrapper").addClass("hidden");
+      }
 
       ReactDOM.render(<Pokedex />, list);
     </script>
